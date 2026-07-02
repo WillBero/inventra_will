@@ -8,11 +8,11 @@ yum install -y nginx
 # repo clone (frontend files)
 cd /opt
 rm -rf inventra
-git clone https://github.com/zarcroft/inventra-flob.git inventra
+git clone https://github.com/WillBero/inventra_will.git
 
 # copie frontend
 mkdir -p /usr/share/nginx/html
-cp -r inventra-tf/inventra/frontend/* /usr/share/nginx/html/
+cp -r inventra_will/inventra/frontend/* /usr/share/nginx/html/
 
 # patch API base URL
 sed -i 's#<script src="app.js"></script>#<script>window.INVENTRA_API_URL = "";</script>\n<script src="app.js"></script>#' /usr/share/nginx/html/index.html

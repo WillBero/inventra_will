@@ -10,8 +10,8 @@ DB_URL=$(aws ssm get-parameter --name "${db_ssm_path}" \
   --region ${aws_region})
 
 cd /opt
-git clone https://github.com/zarcroft/inventra-flob.git
-cd inventra-tf/inventra/backend
+git clone https://github.com/WillBero/inventra_will.git
+cd inventra_will/inventra/backend
 
 python3 -m pip install --upgrade pip
 pip3 install -r requirements.txt
