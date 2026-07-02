@@ -8,17 +8,17 @@ yum install -y nginx git
 # repo clone (frontend files)
 cd /opt
 rm -rf inventra
-git clone https://github.com/WillBero/inventra_will.git
+git clone https://github.com/WillBero/inventra_will.git 
 
 # copie frontend (CORRIGÉ)
 mkdir -p /usr/share/nginx/html
 cp -r /opt/inventra_will/inventra/frontend/* /usr/share/nginx/html/
 
 # patch API base URL (sécurisé)
-sed -i 's#<script src="app.js"></script>#<script>window.INVENTRA_API_URL = "http://${backend_private_ip}:5000";</script>\n<script src="app.js"></script>#' /usr/share/nginx/html/index.html
+#sed -i 's#<script src="app.js"></script>#<script>window.INVENTRA_API_URL = "http://${backend_private_ip}:5000";</script>\n<script src="app.js"></script>#' /usr/share/nginx/html/index.html
 
 # nginx config
-cat > /etc/nginx/conf.d/inventra.conf <<EOF
+sudo tee /etc/nginx/conf.d/inventra.conf > /dev/null <<EOF
 server {
     listen 80;
     root /usr/share/nginx/html;
@@ -30,9 +30,6 @@ server {
 
     location /api/ {
         proxy_pass http://${backend_private_ip}:5000;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
     }
 
     location /health {
@@ -44,5 +41,5 @@ EOF
 # remove default nginx config
 rm -f /etc/nginx/conf.d/default.conf || true
 
-systemctl enable nginx
-systemctl restart nginx
+sudo systemctl enable nginx
+sudo systemctl restart nginx
